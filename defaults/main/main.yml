@@ -3,8 +3,8 @@
 # General
 # Version
 superset_package: apache-superset
-superset_version: 1.5.0
-superset_python_version: 3.8
+superset_version: 3.0.1
+superset_python_version: "3.10"
 superset_release_system: linux_amd64
 superset_exec_name: superset
 
@@ -50,33 +50,27 @@ superset_skeleton_paths:
 
 # Libs & packages
 superset_required_libs:
-  - build-essential
-  - unzip
-  - gcc
-  - g++
-  - libssl-dev
-  - libffi-dev
-  - libsasl2-dev
-  - libldap2-dev
-  - libcurl4-openssl-dev
-  - libssl-dev
-  - python3
-  - python-dev
-  - python3-dev
-  - python3-pip
-  - python3-setuptools
+  - acl # support become_user https://docs.ansible.com/ansible-core/2.12/user_guide/become.html#risks-of-becoming-an-unprivileged-user
+  - build-essential 
+  - libssl-dev 
+  - libffi-dev 
+  - python3-dev 
+  - python3-pip 
+  - libsasl2-dev 
+  - libldap2-dev 
+  - default-libmysqlclient-dev
 
 superset_global_required_pip_packages:
   - name: virtualenv
     # version: 20.4.6
 
-superset_required_python_packages:
+superset_required_python_packages: []
   # - name: celery
   #   version: "!=4.4.1,<5.0.0,>=4.3.0"
   # - name: flower
   #   version: 0.9.7
-  - name: markupsafe
-    version: 2.0.1
+  # - name: markupsafe
+  #   version: 2.0.1
   # - name: sqlalchemy-utils
   #   version: 0.36.8
 
