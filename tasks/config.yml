@@ -71,7 +71,8 @@
     SUPERSET_HOME: "{{ superset_app_home }}"
     SUPERSET_CONFIG_PATH: "{{ superset_config_file_path }}"
     FLASK_APP: "{{ superset_flask_app_name }}"
-  when: superset_install.changed or superset_config.changed or superset_force_reinstall # noqa 503
+  when:
+    - (superset_install is defined and superset_install.changed) or (superset_config is defined and superset_config.changed) or (superset_force_reinstall is defined and superset_force_reinstall) # noqa 503
   tags: config
 
 - name: SUPERSET | Create admin users
