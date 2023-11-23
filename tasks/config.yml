@@ -19,7 +19,7 @@
 
 - name: SUPERSET | Copy superset_config file
   template:
-    src: superset_config.j2
+    src: superset_config.py.j2
     dest: "{{ superset_config_file_path }}"
     mode: 0775
     owner: "{{ superset_user }}"

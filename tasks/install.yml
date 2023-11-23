@@ -25,7 +25,7 @@
 
 - name: SUPERSET | Copy profile.d file
   template:
-    src: superset-profile.d-file.j2
+    src: superset.sh.j2
     dest: "/etc/profile.d/superset.sh"
     mode: 0644
 

@@ -1,7 +1,7 @@
 ---
 - name: SUPERSET | Copy Environment File
   template:
-    src: superset-environment-file.j2
+    src: superset-environment.env.j2
     dest: "{{ superset_environment_file_folder }}/{{ superset_app_name }}"
     mode: 0644
     owner: "{{ superset_user }}"
