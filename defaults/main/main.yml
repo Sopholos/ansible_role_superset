@@ -59,6 +59,7 @@ superset_required_libs:
   - libsasl2-dev 
   - libldap2-dev 
   - default-libmysqlclient-dev
+  - libecpg-dev
 
 superset_global_required_pip_packages:
   - name: virtualenv
