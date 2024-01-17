@@ -73,6 +73,8 @@ superset_query_search_limit: 1000
 # Flask-WTF flag for CSRF
 superset_wtf_csrf_enabled: True
 
+superset_wtf_csrf_ssl_strict: True
+
 # Add endpoints that need to be exempt from CSRF protection
 superset_wtf_csrf_exempt_list: ["superset.views.core.log", "superset.views.core.explore_json", "superset.charts.api.data"]
 
