@@ -90,6 +90,10 @@ QUERY_SEARCH_LIMIT = {{ superset_query_search_limit }}
 # Flask-WTF flag for CSRF
 WTF_CSRF_ENABLED = {{ superset_wtf_csrf_enabled }}
 
+# https://flask-wtf.readthedocs.io/en/0.15.x/config/
+# Whether to enforce the same origin policy by checking that the referrer matches the host. Only applies to HTTPS requests. Default is True.
+WTF_CSRF_SSL_STRICT = {{ superset_wtf_csrf_ssl_strict }}
+
 # Add endpoints that need to be exempt from CSRF protection
 WTF_CSRF_EXEMPT_LIST = {{ superset_wtf_csrf_exempt_list }}
 
