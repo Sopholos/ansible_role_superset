@@ -1051,3 +1051,9 @@ DATASET_HEALTH_CHECK = {{ superset_dataset_health_check }}
 # SQLalchemy link doc reference
 SQLALCHEMY_DOCS_URL = "{{ superset_sqlalchemy_docs_url }}"
 SQLALCHEMY_DISPLAY_TEXT = "{{ superset_sqlalchemy_display_text }}"
+
+# Optional user added vars
+{% if superset_config_extra is defined %}{% for option in superset_config_extra %}
+{% if option %}{{ option.name }}: {{option.value}}{% endif %}
+
+{% endfor %}{% endif %}
