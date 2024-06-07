@@ -1,5 +1,4 @@
 ---
-
 - name: SUPERSET | Install
   include: install.yml
   tags:
@@ -21,6 +20,11 @@
   include: config.yml
   tags:
     - superset_configure
+
+- name: SUPERSET | Scripts
+  import_tasks: scripts.yml
+  tags:
+    - superset_scripts
 
 - name: SUPERSET | Service
   include: service.yml

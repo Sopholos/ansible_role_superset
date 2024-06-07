@@ -1,0 +1,23 @@
+---
+- name: prepare | dependencies
+  apt:
+    name:
+      - snapd
+
+- name: prepare | snap powershell
+  community.general.snap:
+    name:
+      - powershell
+    classic: true
+
+- name: prepare | copy PS scripts
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: u+rwx,g=rx,o=rx
+  with_items:
+    - { src: Export-Data.ps1, dest: "{{ superset_scripts_path }}/Export-Data.ps1" }
+    - { src: Import-Data.ps1, dest: "{{ superset_scripts_path }}/Import-Data.ps1" }
+

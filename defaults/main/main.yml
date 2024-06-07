@@ -29,6 +29,7 @@ superset_config_file_path: "{{ superset_conf_path }}/superset_config.py"
 superset_environment_file_folder: /etc/sysconfig
 superset_pidfile_folder: "/run/{{ superset_app_name }}"
 superset_flask_app_name: superset
+superset_scripts_path: "{{ superset_app_home }}/scripts"
 # superset_local_config_folder: "{{ playbook_path }}/files"
 
 # Logs
@@ -47,6 +48,7 @@ superset_skeleton_paths:
   - "{{ superset_metadatadb_path }}"
   - "{{ superset_environment_file_folder }}"
   - "{{ superset_pidfile_folder }}"
+  - "{{ superset_scripts_path }}"  
 
 # Libs & packages
 superset_required_libs:
