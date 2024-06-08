@@ -17,6 +17,7 @@ try {
 
     Set-Location $SUPERSET_HOME/bin;
 
+    New-item -ItemType Directory -Force -Path $destination
     ./superset export-datasources --datasource-file $destination/datasources.json
     if ($LASTEXITCODE -ne 0) { throw "export-datasources exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Datasources exported successfully"
