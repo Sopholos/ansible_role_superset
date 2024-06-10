@@ -1,7 +1,7 @@
 #!/snap/bin/powershell -Command
 # Ansible managed
 param(
-    [parameter(Mandatory=$false)][string]$destination = "/mnt/temp/superset/project",
+    [parameter(Mandatory=$false)][string]$source = "/mnt/temp/superset/project",
     [parameter(Mandatory=$false)][string]$SUPERSET_HOME = "/opt/superset",
     [parameter(Mandatory=$false)][string]$SUPERSET_CONFIG_PATH = "/etc/superset/superset_config.py",
     [parameter(Mandatory=$false)][string]$FLASK_APP = "superset"
@@ -17,7 +17,7 @@ try {
 
     Set-Location $SUPERSET_HOME/bin;
 
-    ./superset import-dashboards --path $destination/dashboards.json
+    ./superset import-dashboards --path $source/dashboards.json
     if ($LASTEXITCODE -ne 0) { throw "import-dashboards exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Dashboards imported successfully"
 }
