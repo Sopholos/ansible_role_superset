@@ -17,7 +17,7 @@ try {
 
     Set-Location $SUPERSET_HOME/bin;
 
-    ./superset import-dashboards --path $source/dashboards.json
+    ./superset import-dashboards --path=$source/dashboards.json
     if ($LASTEXITCODE -ne 0) { throw "import-dashboards exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Dashboards imported successfully"
 }
