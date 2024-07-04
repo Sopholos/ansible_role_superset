@@ -18,6 +18,11 @@ try {
     Set-Location $SUPERSET_HOME/bin;
 
     New-item -ItemType Directory -Force -Path $destination
+
+    ./superset fab export-roles --path=$destination/roles.json
+    if ($LASTEXITCODE -ne 0) { throw "fab export-roles exited with code $LASTEXITCODE." }
+    Write-Host -ForegroundColor Green "Roles exported successfully"
+
     ./superset export-datasources --datasource-file=$destination/datasources.zip
     if ($LASTEXITCODE -ne 0) { throw "export-datasources exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Datasources exported successfully"

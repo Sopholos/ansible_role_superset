@@ -18,6 +18,10 @@ try {
 
     Set-Location $SUPERSET_HOME/bin;
 
+    ./superset fab import-roles --path=$source/roles.json
+    if ($LASTEXITCODE -ne 0) { throw "fab import-roles exited with code $LASTEXITCODE." }
+    Write-Host -ForegroundColor Green "Roles imported successfully"
+
     ./superset import-datasources --path=$source/datasources.zip --username=$assigneduser
     if ($LASTEXITCODE -ne 0) { throw "import-datasources exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Datasources imported successfully"
