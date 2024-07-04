@@ -18,11 +18,11 @@ try {
     Set-Location $SUPERSET_HOME/bin;
 
     New-item -ItemType Directory -Force -Path $destination
-    ./superset export-datasources --datasource-file=$destination/datasources.json
+    ./superset export-datasources --datasource-file=$destination/datasources.zip
     if ($LASTEXITCODE -ne 0) { throw "export-datasources exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Datasources exported successfully"
 
-    ./superset export-dashboards --dashboard-file=$destination/dashboards.json
+    ./superset export-dashboards --dashboard-file=$destination/dashboards.zip
     if ($LASTEXITCODE -ne 0) { throw "export-dashboards exited with code $LASTEXITCODE." }
     Write-Host -ForegroundColor Green "Dashboards exported successfully"
 }
