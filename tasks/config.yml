@@ -99,7 +99,7 @@
     SUPERSET_CONFIG_PATH: "{{ superset_config_file_path }}"
     FLASK_APP: "{{ superset_flask_app_name }}"
   with_items: "{{ superset_regular_users }}"
-  when: "superset_regular_users is defined and 'username:' ~ item.username not in superset_listed_users.stdout or superset_force_reinstall"
+  when: "superset_regular_users is defined and ('username:' ~ item.username not in superset_listed_users.stdout or superset_force_reinstall)"
   # notify:
   #   - superset sync db
   no_log: true
