@@ -1,23 +1,23 @@
 ---
 - name: SUPERSET | Install
-  include: install.yml
+  import_tasks: install.yml
   tags:
     - superset_install
 
 - name: SUPERSET | Install Firefox and geckodriver
-  include: install-firefox.yml
+  import_tasks: install-firefox.yml
   tags:
     - superset_firefox
   when: superset_webdriver_type == "firefox"
 
 - name: SUPERSET | Install Chrome and chromeDriver
-  include: install-chrome.yml
+  import_tasks: install-chrome.yml
   tags:
     - superset_chrome
   when: superset_webdriver_type == "chrome"
 
 - name: SUPERSET | Configure
-  include: config.yml
+  import_tasks: config.yml
   tags:
     - superset_configure
 
@@ -27,6 +27,6 @@
     - superset_scripts
 
 - name: SUPERSET | Service
-  include: service.yml
+  import_tasks: service.yml
   tags:
     - superset_service
