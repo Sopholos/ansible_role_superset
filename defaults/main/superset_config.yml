@@ -836,6 +836,12 @@ superset_talisman_config: {
   "force_https_permanent": False,
 }
 
+superset_talisman_dev_config: {
+  "content_security_policy": None,
+  "force_https": True,
+  "force_https_permanent": False,
+}
+
 # It is possible to customize which tables and roles are featured in the RLS
 # dropdown. When set, this dict is assigned to `add_form_query_rel_fields` and
 # `edit_form_query_rel_fields` on `RowLevelSecurityFiltersModelView`. Example:
