@@ -20,6 +20,8 @@ superset_viz_row_limit: 10000
 superset_samples_row_limit: 1000
 # max rows retrieved by filter select auto complete
 superset_filter_select_row_limit: 10000
+# native filters cache size (Superset 4+)
+superset_native_filter_default_row_limit: 1000
 
 # Webserver
 superset_webserver_protocol: http
@@ -32,13 +34,7 @@ superset_webserver_port: 8088
 # (gunicorn, nginx, apache, ...) timeout setting to be <= to this setting
 superset_webserver_timeout: 60
 
-# this 2 settings are used by dashboard period force refresh feature
-# When user choose auto force refresh frequency
-# < SUPERSET_DASHBOARD_PERIODICAL_REFRESH_LIMIT
-# they will see warning message in the Refresh Interval Modal.
-# please check PR #9886
-superset_dashboard_periodical_refresh_limit: 0
-superset_dashboard_periodical_refresh_warning_message: None
+# SUPERSET_DASHBOARD_PERIODICAL_REFRESH_* were removed in Superset 4.0.
 
 superset_dashboard_position_data_limit: 65535
 superset_custom_security_manager: None
@@ -97,7 +93,6 @@ superset_proxy_fix_config: {"x_for": 1, "x_proto": 1, "x_host": 1, "x_port": 1, 
 # ------------------------------
 superset_app_name: superset
 superset_app_icon: /static/assets/images/superset-logo-horiz.png
-superset_app_icon_width: 126
 
 # To specify where clicking the logo would take the user
 # e.g. setting it to '/' would take the user to '/superset/welcome/'
@@ -107,33 +102,13 @@ superset_logo_target_path: None
 # ex: http://localhost:8080/swagger/v1
 superset_fab_api_swagger_ui: True
 
-# Druid query timezone
-# tz.tzutc() : Using utc timezone
-# tz.tzlocal() : Using local timezone
-# tz.gettz('Asia/Shanghai') : Using the time zone with specific name
-# [TimeZone List]
-# See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-# other tz can be overridden by providing a local_config
-superset_druid_tz: tz.tzutc()
-superset_druid_analysis_types: ["cardinality"]
-
-# Legacy Druid NoSQL (native) connector
-# Druid supports a SQL interface in its newer versions.
-# Setting this flag to True enables the deprecated, API-based Druid
-# connector. This feature may be removed at a future date.
-superset_druid_is_active: False
-
-# If Druid is active whether to include the links to scan/refresh Druid datasources.
-# This should be disabled if you are trying to wean yourself off of the Druid NoSQL
-# connector.
-superset_druid_metadata_links_enabled: True
-
 # [Authentication]
 # The authentication type
-# AUTH_OID : Is for OpenID
+# AUTH_OAUTH : OAuth2 (preferred replacement for OpenID)
 # AUTH_DB : Is for database (username/password)
 # AUTH_LDAP : Is for LDAP
 # AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
+# Note: AUTH_OID was removed in Superset 6.0 / Flask-AppBuilder 5.0
 superset_auth_type: AUTH_DB
 
 # To setup Full admin role name
@@ -173,12 +148,22 @@ superset_auth_ldap_group_field:  # the LDAP user attribute which has their role 
 superset_auth_roles_sync_at_login: True  # if we should replace ALL the user's roles each login, or only on registration
 superset_permanent_session_lifetime: 1800  # force users to re-auth after 30min of inactivity (to keep roles in sync)
 
-# To setup OpenID providers example for OpenID authentication
-# superset_openid_providers: [
-#   { 'name': 'Yahoo', 'url': 'https://open.login.yahoo.com/' },
-#   { 'name': 'Flickr', 'url': 'https://www.flickr.com/<username>' },
-# ]
-superset_openid_providers: []
+# [OAuth providers]
+# Example:
+# superset_oauth_providers:
+#   - name: google
+#     icon: fa-google
+#     token_key: access_token
+#     remote_app:
+#       client_id: my-client-id
+#       client_secret: my-client-secret
+#       api_base_url: https://www.googleapis.com/oauth2/v2/
+#       client_kwargs:
+#         scope: email profile
+#       request_token_url: null
+#       access_token_url: https://accounts.google.com/o/oauth2/token
+#       authorize_url: https://accounts.google.com/o/oauth2/auth
+superset_oauth_providers: []
 
 # [Roles config]
 # Grant public role the same set of permissions as for a selected builtin role.
@@ -209,31 +194,19 @@ superset_languages: {
 }
 
 # [FEATURE_FLAGS]
+# Only flags still present in Superset 6.0 are exposed below.
+# The following flags were removed/permanently enabled in 4.0 - 6.0 and must NOT
+# be set anymore: ENABLE_REACT_CRUD_VIEWS, ROW_LEVEL_SECURITY, VERSIONED_EXPORT,
+# DISABLE_DATASET_SOURCE_EDIT, DISABLE_LEGACY_DATASOURCE_EDITOR,
+# ENABLE_EXPLORE_JSON_CSRF_PROTECTION, ENABLE_TEMPLATE_REMOVE_FILTERS,
+# REMOVE_SLICE_LEVEL_LABEL_COLORS, CLIENT_CACHE, DASHBOARD_CACHE,
+# DASHBOARD_NATIVE_FILTERS_SET, DASHBOARD_CROSS_FILTERS,
+# ENABLE_EXPLORE_DRAG_AND_DROP, GENERIC_CHART_AXES, KV_STORE,
+# SHARE_QUERIES_VIA_KV_STORE, HORIZONTAL_FILTER_BAR, ALLOW_DASHBOARD_DOMAIN_SHARDING.
 
-# allow dashboard to use sub-domains to send chart request
-# you also need ENABLE_CORS and
-# SUPERSET_WEBSERVER_DOMAINS for list of domains
-superset_allow_dashboard_domain_sharding: True
-
-# Experimental feature introducing a client (browser) cache
-superset_client_cache: False
-superset_disable_dataset_source_edit: False
-superset_druid_joins: False
 superset_dynamic_plugins: False
-
-# For some security concerns, you may need to enforce CSRF protection on
-# all query request to explore_json endpoint. In Superset, we use
-# `flask-csrf <https://sjl.bitbucket.io/flask-csrf/>`_ add csrf protection
-# for all POST requests, but this protection doesn't apply to GET method.
-# When ENABLE_EXPLORE_JSON_CSRF_PROTECTION is set to true, your users cannot
-# make GET request to explore_json. explore_json accepts both GET and POST request.
-# See `PR 7935 <https://github.com/apache/superset/pull/7935>`_ for more details.
-superset_disable_legacy_datasource_editor: True
-superset_enable_explore_json_csrf_protection: False
 superset_enable_template_processing: False
-superset_enable_template_remove_filters: False
 superset_enable_javascript_controls: False
-superset_kv_store: False
 
 # When this feature is enabled, nested types in Presto will be
 # expanded into extra columns and/or arrays. This is experimental,
@@ -242,47 +215,21 @@ superset_presto_expand_data: False
 
 # Exposes API endpoint to compute thumbnails
 superset_thumbnails: False
-superset_dashboard_cache: False
-superset_remove_slice_level_label_colors: False
-superset_share_queries_via_kv_store: False
 superset_tagging_system: False
-superset_sqllab_backend_persistence: False
+superset_sqllab_backend_persistence: True
 superset_listviews_default_card_view: False
-
-# Enables the replacement React views for all the FAB views (list, edit, show) with
-# designs introduced in https://github.com/apache/superset/issues/8976
-# (SIP-34). This is a work in progress so not all features available in FAB have
-# been implemented.
-superset_enable_react_crud_views: True
 
 # When True, this flag allows display of HTML tags in Markdown components
 superset_display_markdown_html: True
 
 # When True, this escapes HTML (rather than rendering it) in Markdown components
 superset_escape_markdown_html: False
-superset_dashboard_native_filters: False
-superset_dashboard_cross_filters: False
-superset_dashboard_native_filters_set: False
 superset_global_async_queries: False
-superset_versioned_export: False
-
-# Note that: RowLevelSecurityFilter is only given by default to the Admin role
-# and the Admin Role does have the all_datasources security permission.
-# But, if users create a specific role with access to RowLevelSecurityFilter MVC
-# and a custom datasource access, the table dropdown will not be correctly filtered
-# by that custom datasource access. So we are assuming a default security config,
-# a custom security config could potentially give access to setting filters on
-# tables that users do not have access to.
-superset_row_level_security: True
 
 # Enables Alerts and reports new implementation
 superset_alert_reports: False
 
-# Enable experimental feature to search for other dashboards
-superset_omnibar: False
-
 superset_dashboard_rbac: False
-superset_enable_explore_drag_and_drop: False
 
 # Enabling ALERTS_ATTACH_REPORTS, the system sends email and slack message
 # with screenshot and link
@@ -295,6 +242,16 @@ superset_alerts_attach_reports: True
 # Enabling FORCE_DATABASE_CONNECTIONS_SSL forces all database connections to be
 # encrypted before being saved into superset metastore.
 superset_force_database_connections_ssl: False
+
+# 6.0 features
+# Take dashboard screenshots in tiles for large dashboards
+superset_screenshot_tiled_enabled: True
+# Drill By feature, on by default since 4.0
+superset_drill_by: True
+# Dashboard virtualization, on by default since 4.0
+superset_dashboard_virtualization: True
+# Default off (was implicit before 4.0). Toggle if you need wider activity logs.
+superset_enable_broad_activity_access: False
 
 # Optional user added vars to FEATURE FLAGS
 # superset_feature_flags_extra:
@@ -320,23 +277,8 @@ superset_force_database_connections_ssl: False
 #   }]
 superset_extra_categorical_color_schemes:
 
-# THEME_OVERRIDES is used for adding custom theme to superset
-# example code for "My theme" custom scheme
-# superset_theme_overrides: {
-#   "borderRadius": 4,
-#   "colors": {
-#     "primary": {
-#       "base": 'red',
-#     },
-#     "secondary": {
-#       "base": 'green',
-#     },
-#     "grayscale": {
-#       "base": 'orange',
-#     }
-#   }
-# }
-superset_theme_overrides:
+# Note: legacy THEME_OVERRIDES support was removed in Superset 6.0.
+# Use the Ant Design v5 theming system via THEME_DEFAULT / THEME_DARK instead.
 
 # EXTRA_SEQUENTIAL_COLOR_SCHEMES is used for adding custom sequential color schemes
 # superset_extra_sequential_color_schemes: [{
@@ -350,9 +292,15 @@ superset_theme_overrides:
 # }]
 superset_extra_sequential_color_schemes:
 
-superset_thumbnail_selenium_user: admin
+# Alerts/Reports & thumbnails executor (replaces THUMBNAILS_SELENIUM_USER and
+# ALERT_REPORTS_EXECUTE_AS / THUMBNAILS_EXECUTE_AS removed in Superset 5.0).
+# See https://superset.apache.org/docs/configuration/alerts-reports/
+superset_thumbnails_executors: ["selenium"]
+superset_alert_reports_executors: ["owner"]
+superset_thumbnail_executors_username: admin
+
 superset_thumbnail_cache_config: {
-  "CACHE_TYPE": "null",
+  "CACHE_TYPE": "NullCache",
   "CACHE_NO_NULL_WARNING": True,
 }
 
@@ -392,12 +340,8 @@ superset_store_cache_keys_in_metadata_db: False
 superset_enable_cors: False
 superset_cors_options: {}
 
-# Chrome allows up to 6 open connections per domain at a time. When there are more
-# than 6 slices in dashboard, a lot of time fetch requests are queued up and wait for
-# next available socket. PR #5039 is trying to allow domain sharding for Superset,
-# and this feature will be enabled by configuration only (by default Superset
-# doesn't allow cross-domain request).
-superset_webserver_domains: None
+# SUPERSET_WEBSERVER_DOMAINS / domain sharding was deprecated in 5.0 and removed
+# in 6.0 in favor of HTTP/2.
 
 # Allowed format types for upload on Database view
 superset_excel_extensions: '{"xlsx", "xls"}'
@@ -407,7 +351,8 @@ superset_allowed_extensions: "{*EXCEL_EXTENSIONS, *CSV_EXTENSIONS}"
 # CSV Options: key/value pairs that will be passed as argument to DataFrame.to_csv
 # method.
 # note: index option should not be overridden
-superset_csv_export: {"encoding": "utf-8"}
+# Default encoding changed to utf-8-sig in Superset 6.0 for Excel compatibility.
+superset_csv_export: {"encoding": "utf-8-sig"}
 
 # [ Time grain configurations ]
 # List of time grains to disable in the application (see list of builtin
@@ -506,10 +451,6 @@ superset_celery_annotations:
   }"
 superset_celerybeat_schedule:
   "{
-    'email_reports.schedule_hourly': {
-      'task': 'email_reports.schedule_hourly',
-      'schedule': crontab(minute=1, hour='*'),
-    },
     'reports.scheduler': {
       'task': 'reports.scheduler',
       'schedule': crontab(minute='*', hour='*'),
@@ -602,17 +543,8 @@ superset_results_backend: None
 # in order to disable should breaking issues be discovered.
 superset_results_backend_use_msgpack: True
 
-# The S3 bucket where you want to store your external hive tables created
-# from CSV files. For example, 'companyname-superset'
-superset_csv_to_hive_upload_s3_bucket: None
-
-# The directory within the bucket specified above that will
-# contain all the external tables
-superset_csv_to_hive_upload_directory: EXTERNAL_HIVE_TABLES/
-
-# The namespace within hive where the tables created from
-# uploading CSVs will be stored.
-superset_uploaded_csv_hive_namespace: None
+# CSV-to-Hive upload helpers (CSV_TO_HIVE_UPLOAD_*, UPLOADED_CSV_HIVE_NAMESPACE,
+# ALLOWED_USER_CSV_SCHEMA_FUNC) were removed in Superset 5.0.
 
 # Values that should be treated as nulls for the csv uploads.
 superset_csv_default_na_names:
@@ -874,18 +806,7 @@ superset_prevent_unsafe_db_connections: True
 # Example: SSL_CERT_PATH = "/certs"
 superset_ssl_cert_path: None
 
-# SIP-15 should be enabled for all new Superset deployments which ensures that the time
-# range endpoints adhere to [start, end). For existing deployments admins should provide
-# a dedicated period of time to allow chart producers to update their charts before
-# mass migrating all charts to use the [start, end) interval.
-#
-# Note if no end date for the grace period is specified then the grace period is
-# indefinite.
-superset_sip_15_enabled: True
-superset_sip_15_grace_period_end: None  # exclusive
-superset_sip_15_default_time_range_endpoints: ["unknown", "inclusive"]
-superset_sip_15_toast_message: >
-  'Action Required: Preview then save your chart using the new time range endpoints <a target="_blank" href="{url}" class="alert-link">here</a>.'
+# SIP-15 settings were removed in Superset 4.0 (all charts now use [start, end)).
 
 # SQLA table mutator, every time we fetch the metadata for a certain table
 # (superset.connectors.sqla.models.SqlaTable), we call this hook
@@ -896,12 +817,14 @@ superset_sqla_table_mutator: "lambda table: table"
 
 # Global async query config options.
 # Requires GLOBAL_ASYNC_QUERIES feature flag to be enabled.
-superset_global_async_queries_redis_config: {
-  "port": 6379,
-  "host": "127.0.0.1",
-  "password": "",
-  "db": 0,
-  "ssl": False,
+# GLOBAL_ASYNC_QUERIES_REDIS_CONFIG was deprecated in 5.0; configure the
+# cache backend below instead. The redis backend uses RedisCacheBackend.
+superset_global_async_queries_cache_backend: {
+  "CACHE_TYPE": "RedisCache",
+  "CACHE_KEY_PREFIX": "superset_async_",
+  "CACHE_REDIS_HOST": "127.0.0.1",
+  "CACHE_REDIS_PORT": 6379,
+  "CACHE_REDIS_DB": 0,
 }
 superset_global_async_queries_redis_stream_prefix: async-events-
 superset_global_async_queries_redis_stream_limit: 1000

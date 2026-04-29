@@ -7,6 +7,9 @@
 
 This ansible role installs [Superset](https://superset.apache.org/) in a Debian environment. It has been tested for Debian buster.
 
+The default targeted Superset version is **6.0.0** (Python 3.11). Override
+`superset_version` and `superset_python_version` to pin to another release.
+
 This role has been generated using the [cookiecutter](https://github.com/cookiecutter/cookiecutter) tool, you can generate a similar role that fits your needs using the this [cookiecutter template](https://github.com/idealista/cookiecutter-ansible-role).
 
 - [Getting Started](#getting-started)

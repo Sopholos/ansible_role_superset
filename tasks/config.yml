@@ -115,7 +115,7 @@
   tags: config
 
 - name: SUPERSET | Create databases connections
-  command: "./{{ superset_exec_name }} set_database_uri -d {{ item.name }}  -u {{ item.uri }}"
+  command: "./{{ superset_exec_name }} set-database-uri -d {{ item.name }} -u {{ item.uri }}"
   args:
     chdir: "{{ superset_bin_path }}"
   environment:
