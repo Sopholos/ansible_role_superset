@@ -55,6 +55,18 @@
     chdir: "{{ superset_app_home }}"
   when: not virtualenv_check.stat.exists
 
+- name: SUPERSET | Upgrade pip tooling inside virtualenv
+  become: true
+  become_user: "{{ superset_user }}"
+  pip:
+    name:
+      - pip
+      - setuptools
+      - wheel
+    state: latest
+    virtualenv: "{{ superset_app_home }}"
+    virtualenv_python: "python{{ superset_python_version | default(omit) }}"
+
 - name: SUPERSET | Installing Superset Python dependencies
   become: true
   become_user: "{{ superset_user }}"
@@ -80,6 +92,7 @@
     virtualenv: "{{ superset_app_home }}"
     virtualenv_python: "python{{ superset_python_version | default(omit) }}"
     state: "forcereinstall"
+    extra_args: "--constraint {{ superset_pip_constraints_url }}"
   when: superset_force_reinstall
   notify:
     - "restart {{ superset_services.app.service_name }}"
@@ -93,6 +106,7 @@
     state: present
     virtualenv: "{{ superset_app_home }}"
     virtualenv_python: "python{{ superset_python_version | default(omit) }}"
+    extra_args: "--constraint {{ superset_pip_constraints_url }}"
   register: superset_install
   notify:
     - "restart {{ superset_services.app.service_name }}"

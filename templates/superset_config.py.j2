@@ -321,9 +321,9 @@ FEATURE_FLAGS = {
     "DISPLAY_MARKDOWN_HTML": {{ superset_display_markdown_html }},
     # When True, this escapes HTML (rather than rendering it) in Markdown components
     "ESCAPE_MARKDOWN_HTML": {{ superset_escape_markdown_html }},
-    "DASHBOARD_NATIVE_FILTERS": {{ superset_dashboard_native_filters }},
-    "DASHBOARD_CROSS_FILTERS": {{ superset_dashboard_cross_filters }},
-    "DASHBOARD_NATIVE_FILTERS_SET": {{ superset_dashboard_native_filters_set }},
+    "DRILL_BY": {{ superset_drill_by }},
+    "DASHBOARD_VIRTUALIZATION": {{ superset_dashboard_virtualization }},
+    "SCREENSHOT_TILED_ENABLED": {{ superset_screenshot_tiled_enabled }},
     "GLOBAL_ASYNC_QUERIES": {{ superset_global_async_queries }},
     "VERSIONED_EXPORT": {{ superset_versioned_export }},
     # Note that: RowLevelSecurityFilter is only given by default to the Admin role
@@ -339,7 +339,6 @@ FEATURE_FLAGS = {
     # Enable experimental feature to search for other dashboards
     "OMNIBAR": {{ superset_omnibar }},
     "DASHBOARD_RBAC": {{ superset_dashboard_rbac }},
-    "ENABLE_EXPLORE_DRAG_AND_DROP": {{ superset_enable_explore_drag_and_drop }},
     # Enabling ALERTS_ATTACH_REPORTS, the system sends email and slack message
     # with screenshot and link
     # Disables ALERTS_ATTACH_REPORTS, the system DOES NOT generate screenshot

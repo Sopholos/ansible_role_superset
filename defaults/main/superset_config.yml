@@ -260,9 +260,6 @@ superset_display_markdown_html: True
 
 # When True, this escapes HTML (rather than rendering it) in Markdown components
 superset_escape_markdown_html: False
-superset_dashboard_native_filters: False
-superset_dashboard_cross_filters: False
-superset_dashboard_native_filters_set: False
 superset_global_async_queries: False
 superset_versioned_export: False
 
@@ -282,7 +279,9 @@ superset_alert_reports: False
 superset_omnibar: False
 
 superset_dashboard_rbac: False
-superset_enable_explore_drag_and_drop: False
+superset_drill_by: True
+superset_dashboard_virtualization: True
+superset_screenshot_tiled_enabled: True
 
 # Enabling ALERTS_ATTACH_REPORTS, the system sends email and slack message
 # with screenshot and link
