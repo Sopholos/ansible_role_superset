@@ -4,11 +4,16 @@ galaxy_info:
   author: idealista
   company: Idealista S.A.U.
   description: Superset Role
-  min_ansible_version: 2.9.9
+  min_ansible_version: 2.14
   license: Apache 2.0
   galaxy-tags:
     - superset
   platforms:
     - name: Debian
       versions:
-        - buster
+        - bullseye
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble

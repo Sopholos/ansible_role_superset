@@ -5,7 +5,7 @@
 
 ![Logo](https://raw.githubusercontent.com/idealista/superset_role/main/logo.gif)
 
-This ansible role installs [Superset](https://superset.apache.org/) in a Debian environment. It has been tested for Debian buster.
+This ansible role installs [Superset](https://superset.apache.org/) in Debian/Ubuntu environments.
 
 This role has been generated using the [cookiecutter](https://github.com/cookiecutter/cookiecutter) tool, you can generate a similar role that fits your needs using the this [cookiecutter template](https://github.com/idealista/cookiecutter-ansible-role).
 
@@ -26,8 +26,8 @@ These instructions will get you a copy of the role for your Ansible playbook. On
 
 ### Prerequisites :ballot_box_with_check:
 
-Ansible 2.9.x.x version installed.
-Inventory destination should be a Debian (preferable Debian 10 Buster ) or Ubuntu environment.
+Ansible 2.14+ installed.
+Inventory destination should be Debian 11/12 or Ubuntu 22.04/24.04 environment.
 
 ℹ️ By default this role use the predefined installation of Python that comes with the distro.
 
@@ -40,7 +40,7 @@ Create or add to your roles dependency file (e.g requirements.yml):
 ```yml
 - src: idealista.superset_role
   scm: git
-  version: 1.1.0
+  version: main
   name: superset_role
 ```
 
@@ -132,8 +132,8 @@ pipenv run molecule test
 
 ## Built With :building_construction:
 
-![Ansible](https://img.shields.io/badge/ansible-2.9.21-green.svg)
-![Molecule](https://img.shields.io/badge/molecule-3.0.6-green.svg)
+![Ansible](https://img.shields.io/badge/ansible-2.14%2B-green.svg)
+![Molecule](https://img.shields.io/badge/molecule-3.0.8-green.svg)
 ![Goss](https://img.shields.io/badge/goss-0.3.9-green.svg)
 
 ## Versioning :card_file_box:
