@@ -279,10 +279,10 @@ superset_alert_reports: False
 superset_omnibar: False
 
 superset_dashboard_rbac: False
-superset_drill_by: True
-superset_dashboard_virtualization: True
-superset_screenshot_tiled_enabled: True
-
+superset_dashboard_native_filters: False
+superset_dashboard_cross_filters: False
+superset_dashboard_native_filters_set: False
+superset_enable_explore_drag_and_drop: False
 # Enabling ALERTS_ATTACH_REPORTS, the system sends email and slack message
 # with screenshot and link
 # Disables ALERTS_ATTACH_REPORTS, the system DOES NOT generate screenshot
